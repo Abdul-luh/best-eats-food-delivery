@@ -1,22 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	images: {
-		domains: [
-			"pexels.com",
-			"images.unsplash.com",
-			"duyt4h9nfnj50.cloudfront.net",
-		],
-	},
-	// images: {
-	// 	remotePatterns: [
-	// 		{
-	// 			protocol: "https",
-	// 			hostname: "pexels.com",
-	// 			// port: "",
-	// 			pathname: "/account123/**",
-	// 		},
-	// 	],
-	// },
-};
+  images: {
+    domains: [
+      'images.unsplash.com',
+      'plus.unsplash.com',
+      'source.unsplash.com',
+      'res.cloudinary.com',
+      'pexels.com',
+      'images.pexels.com',
+      'duyt4h9nfnj50.cloudfront.net',
+    ],
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
