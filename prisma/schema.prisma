@@ -27,7 +27,7 @@ enum OrderStatus {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(cuid()) @map("_id")
   name          String?
   email         String    @unique
   password      String
@@ -49,7 +49,7 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(cuid()) @map("_id")
   userId            String
   type              String
   provider          String
@@ -132,11 +132,12 @@ model Product {
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
   cartItems  CartItem[]
-  wishlist   Wishlist[]
+  wishlistIds  String[]
+  wishlists    Wishlist[] @relation(fields: [wishlistIds], references: [id])
 }
 
 model Cart {
-  id        String     @id @default(cuid())
+  id        String     @id @default(cuid()) @map("_id")
   userId    String?    @unique
   items     CartItem[]
   createdAt DateTime   @default(now())
@@ -144,7 +145,7 @@ model Cart {
 }
 
 model CartItem {
-  id        String  @id @default(cuid())
+  id        String  @id @default(cuid()) @map("_id")
   cartId    String
   productId String
   quantity  Int     @default(1)
@@ -155,7 +156,7 @@ model CartItem {
 }
 
 model Order {
-  id            String      @id @default(cuid())
+  id            String      @id @default(cuid()) @map("_id")
   orderNumber   String      @unique
   userId        String
   restaurantId  String
@@ -181,7 +182,7 @@ model Order {
 }
 
 model OrderItem {
-  id        String @id @default(cuid())
+  id        String @id @default(cuid()) @map("_id")
   orderId   String
   productId String
   quantity  Int
@@ -193,7 +194,7 @@ model OrderItem {
 }
 
 model Address {
-  id           String  @id @default(cuid())
+  id           String  @id @default(cuid()) @map("_id")
   userId       String
   label        String  // Home, Office, etc.
   street       String
@@ -239,7 +240,7 @@ model Review {
 }
 
 model Coupon {
-  id             String    @id @default(cuid())
+  id             String    @id @default(cuid()) @map("_id")
   code           String    @unique
   discountType   String    @default("PERCENTAGE") // PERCENTAGE, FIXED
   discountValue  Float
@@ -279,9 +280,10 @@ model Notification {
 }
 
 model Wishlist {
-  id        String    @id @default(cuid())
+  id        String    @id @default(cuid()) @map("_id")
   userId    String    @unique
-  products  Product[]
+  productIds String[]
+  products   Product[] @relation(fields: [productIds], references: [id])
 
   // Relationships
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
